@@ -1,21 +1,24 @@
 <?php
 session_id('mySessionID1');
 session_start();
-$connection=mysqli_connect('db','root','vaishnavi123');
+$connection=mysqli_connect('db','vaishnavi','vaishnavi123');
 mysqli_select_db($connection,'payverse');
 $usr=$_SESSION['username'];
 $q1="select fname,lname,dob,gender,email,phno from info where email='$usr';";
-$q2="select walletbal,profpic from login_info where loginid='$usr';";
+$q2="select walletbal from login_info where loginid='$usr';";
 $q3="select * from bank_account;";
+$q4="select profpic from profile where email='$usr';";
 $r1 = $connection->query($q1);
 $r2 = $connection->query($q2);
 $r3=$connection->query($q3);
+$r4=$connection->query($q4);
 //$a=$r2->walletbal;
 //echo"$a";
 //$row1=$r1->fetch_assoc();
 $row1=$r1->fetch_object();
 $row2=$r2->fetch_object();
 $row3=$r3->fetch_object();
+$row4=$r4->fetch_object();
 ?>
 <html lang="en">
 <head>
@@ -239,10 +242,10 @@ $row3=$r3->fetch_object();
             <div class="details">
                 <!-- <img src="logo1.jpg" alt="" style="clip-path: circle(30%);margin: 3%;width: 80%;height: 80%;position: relative;left: 5%;"> -->
                 <?php 
-                if($row2->profpic==NULL)
+                if($row4->profpic==NULL)
                 echo '<img src="default_profile.jpg" style="clip-path: circle(30%);margin: 3%;width: 80%;height: 80%;position: relative;left: 5%;" />';
                 else
-                echo '<img src="data:image/jpeg;base64,'.base64_encode( $row2->profpic ).'" style="clip-path: circle(30%);margin: 3%;width: 80%;height: 80%;position: relative;left: 5%;" />';?>
+                echo '<img src="data:image/jpeg;base64,'.base64_encode( $row4->profpic ).'" style="clip-path: circle(30%);margin: 3%;width: 80%;height: 80%;position: relative;left: 5%;" />';?>
                 <div class="regde">
                     <h2>Name: <?php echo"$row1->fname $row1->lname";?></h2>
                     <h2>DoB: <?php echo"$row1->dob";?></h2>

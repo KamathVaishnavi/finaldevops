@@ -1,7 +1,5 @@
-<?php 
-
-session_start();
-
+<?php
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); 
 function signup($data)
 {
 	$errors = array();
@@ -86,7 +84,9 @@ function login($data)
 function database_run($query,$vars = array())
 {
 	$string = "mysql:host=db;dbname=payverse";
-	$con = new PDO($string,'root','vaishnavi123');
+	$con = new PDO($string,'vaishnavi','vaishnavi123');
+// $con=mysqli_connect('db','vaishnavi','vaishnavi123');
+
 
 	if(!$con){
 		return false;

@@ -1,7 +1,7 @@
 <?php
 session_id('mySessionID1');
 session_start();
-$connection=mysqli_connect('db','root','vaishnavi123');
+$connection=mysqli_connect('db','vaishnavi','vaishnavi123');
 mysqli_select_db($connection,'payverse');
 $amt=$_POST['amt'];
 $loginid=$_SESSION['username'];

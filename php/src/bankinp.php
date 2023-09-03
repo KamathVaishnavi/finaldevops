@@ -1,8 +1,10 @@
 <?php
+session_id('mySessionID');
+session_start();
 
-$connection=mysqli_connect('db','root','vaishnavi123');
+$connection=mysqli_connect('db','vaishnavi','vaishnavi123');
 if($connection){
-    echo "Connection established";
+    // echo "Connection established";
 
 }
 else {
@@ -11,10 +13,9 @@ else {
 mysqli_select_db($connection,'payverse');
 $accno=$_POST['accno'];
 $bal=$_POST['balance'];
-session_id('mySessionID');
-session_start();
+
 $loginid=$_SESSION['email'];
-echo"$bal $accno $loginid";
+// echo"$bal $accno $loginid";
 $data="update bank_account set accno='$accno'  where loginid='$loginid'";
 
 mysqli_query($connection,$data);

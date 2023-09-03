@@ -1,8 +1,10 @@
 <?php
-$connection=mysqli_connect('db','root','vaishnavi123');
+ session_id('mySessionID1');
+ session_start();
+$connection=mysqli_connect('db','vaishnavi','vaishnavi123');
 // session_unset();
 if($connection){
-    echo "Connection established";
+    // echo "Connection established";
 
 }
 else {
@@ -16,14 +18,13 @@ $pwd=$_POST['pass'];
 $query="select * from login_info where password='$pwd' and loginid='$uname'";
 $result=mysqli_query($connection,$query);
 if(mysqli_num_rows($result)==1){
-    session_id('mySessionID1');
-    session_start();
   $_SESSION['username']= $uname;
   $_SESSION['password']= $pwd;
 if(isset( $_SESSION['username'] ) )
+header('location:home.html');
 echo"true";
-    echo"Username or Password correct $uname and $pwd";
-    header('location:home.html');
+echo"Username or Password correct $uname and $pwd";
+
 }
 else{
     echo "Login Unsuccessful";

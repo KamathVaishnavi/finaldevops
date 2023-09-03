@@ -8,8 +8,8 @@ services:
         depends_on:
             - db
         volumes:
-            - ./php/src:/var/www/html/
-            - C:/Users/HP/Desktop/custom_php.ini:/usr/local/etc/php/php.ini
+            - ./sql_scripts:/docker-entrypoint-initdb.d/
+            - ./php/src:/var/www/html/  
         ports:
             - 8000:80
 

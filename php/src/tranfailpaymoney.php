@@ -1,11 +1,6 @@
-
-
-
-
-<!DOCTYPE html>
 <?php
         session_start();
-        $connection=mysqli_connect('db','root','vaishnavi123');
+        $connection=mysqli_connect('db','vaishnavi','vaishnavi123');
         mysqli_select_db($connection,'payverse');
         $loginid=$_SESSION['username'];
 
@@ -13,6 +8,7 @@
         $r1 = $connection->query($q1);
         $row1=$r1->fetch_object();
         ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

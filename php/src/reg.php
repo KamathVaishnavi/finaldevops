@@ -1,11 +1,11 @@
 <?php
 
-$connection=mysqli_connect('db','root','vaishnavi123');
+$connection=mysqli_connect('db','vaishnavi','vaishnavi123');
 session_id('mySessionID');
 session_start();
 
 if($connection){
-    echo "Connection established";
+    // echo "Connection established";
 
 }
 else {
@@ -20,19 +20,20 @@ $dob=$_POST['dob'];
 $phno=$_POST['phono'];
 $pwd=$_POST['pass1'];
 
+
 $_SESSION['email']=$email;
-echo "hi";
+// echo "hi";
 
 
 $data="insert into info(fname,lname,dob,gender,email,phno,password) values ('$fname','$lname','$dob','$gender','$email','$phno','$pwd')";
 
 mysqli_query($connection,$data);
-
-$data="insert into login_info(loginid,password) values ('$email','$pwd')";
+$a=0;
+$data="insert into login_info(loginid,password,walletbal) values ('$email','$pwd','$a')";
 
 mysqli_query($connection,$data);
-
-$data="insert into bank_account(loginid) values ('$email')";
+$d=0;
+$data="insert into bank_account(accno,balance,loginid) values ('$d','$d','$email')";
 
 mysqli_query($connection,$data);
 

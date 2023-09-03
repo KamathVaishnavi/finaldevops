@@ -7,7 +7,7 @@ session_start();
 // echo"false";
 // $a=$_SESSION['username'];
 // echo"$a";
-$connection=mysqli_connect('db','root','vaishnavi123');
+$connection=mysqli_connect('db','vaishnavi','vaishnavi123');
 mysqli_select_db($connection,'payverse');
 $amt=$_POST['amt'];
 $phno=$_POST['rphno'];

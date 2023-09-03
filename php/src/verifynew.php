@@ -1,3 +1,67 @@
+<?php
+session_start();
+?>
+<?php
+
+require "mail.php";
+require "functions.php";
+$errors = array();
+
+if($_SERVER['REQUEST_METHOD'] == "GET"){
+
+    //send email
+    $vars['code'] =  rand(10000,99999);
+
+    //save to database
+    date_default_timezone_set('Asia/Kolkata');
+    $d=date("Y/m/d H:i:s",time());
+    $endtime=strtotime("+10 minutes", strtotime($d));
+    $vars['expires'] = date("Y/m/d H:i:s",$endtime);
+    $vars['email'] = $_SESSION['email'];
+
+    $query = "insert into verify (code,expires,email) values (:code,:expires,:email)";
+    database_run($query,$vars);
+
+    $message = "your code is " . $vars['code'];
+    $subject = "Email verification";
+    $recipient = $vars['email'];
+    send_mail($recipient,$subject,$message);
+}
+
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+    
+
+        $vars = array();
+        $vars['email'] = $_SESSION['email'];
+        $vars['code'] = $_POST['code'];
+        $query = "select * from verify where code = :code && email = :email";
+
+
+        $row = database_run($query,$vars);
+
+        if(is_array($row)){
+            $row = $row[0];
+            $time = time();
+            //  echo "$row->expires";
+            //  echo"$time";
+            if($row->expires > $time){
+
+                // $id = $_SESSION['USER']->id;
+                header("Location: emailverification.html");
+                die;
+            }else{
+              header("Location: emailfailed.html");
+            }
+
+        }else{
+          header("Location: emailfailed.html");
+        }
+    
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,66 +162,6 @@
   display: block;cursor: pointer;
 }
     </style>
-<?php
-
-require "mail.php";
-require "functions.php";
-$errors = array();
-
-if($_SERVER['REQUEST_METHOD'] == "GET"){
-
-    //send email
-    $vars['code'] =  rand(10000,99999);
-
-    //save to database
-    date_default_timezone_set('Asia/Kolkata');
-    $d=date("Y/m/d H:i:s",time());
-    $endtime=strtotime("+10 minutes", strtotime($d));
-    $vars['expires'] = date("Y/m/d H:i:s",$endtime);
-    $vars['email'] = $_SESSION['email'];
-
-    $query = "insert into verify (code,expires,email) values (:code,:expires,:email)";
-    database_run($query,$vars);
-
-    $message = "your code is " . $vars['code'];
-    $subject = "Email verification";
-    $recipient = $vars['email'];
-    send_mail($recipient,$subject,$message);
-}
-
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-
-    
-
-        $vars = array();
-        $vars['email'] = $_SESSION['email'];
-        $vars['code'] = $_POST['code'];
-        $query = "select * from verify where code = :code && email = :email";
-
-
-        $row = database_run($query,$vars);
-
-        if(is_array($row)){
-            $row = $row[0];
-            $time = time();
-             echo "$row->expires";
-             echo"$time";
-            if($row->expires > $time){
-
-                // $id = $_SESSION['USER']->id;
-                header("Location: emailverification.html");
-                die;
-            }else{
-              header("Location: emailfailed.html");
-            }
-
-        }else{
-          header("Location: emailfailed.html");
-        }
-    
-}
-
-?>
 
 
 </head>
