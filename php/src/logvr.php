@@ -5,7 +5,6 @@ $connection=mysqli_connect('db','vaishnavi','vaishnavi123');
 // session_unset();
 if($connection){
     // echo "Connection established";
-
 }
 else {
     echo"failed";

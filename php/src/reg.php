@@ -38,5 +38,4 @@ $data="insert into bank_account(accno,balance,loginid) values ('$d','$d','$email
 mysqli_query($connection,$data);
 
 header('location:verifynew.php');
-
 ?>
